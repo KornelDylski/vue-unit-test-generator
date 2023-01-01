@@ -1,0 +1,46 @@
+{
+  "name": "vue-unit-test-generator",
+  "version": "0.0.1",
+  "description": "Generates jest unit test in spec file from vue component",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KornelDylski/vue-unit-test-generator.git"
+  },
+  "bin": {
+    "vutg": "./index.js"
+  },
+  "keywords": [
+    "vuejs",
+    "jest",
+    "vue-test-utils",
+    "spec-generator"
+  ],
+  "author": "Kornel Dylski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KornelDylski/vue-unit-test-generator/issues"
+  },
+  "homepage": "https://github.com/KornelDylski/vue-unit-test-generator#readme",
+  "dependencies": {
+    "hygen": "^6.2.11",
+    "vuex": "^3.6.2",
+    "yargs-parser": "^21.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@vue/test-utils": "^1.3.3",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^29.3.1",
+    "jest": "^29.3.1",
+    "jest-transform-stub": "^2.0.0",
+    "jsdom": "^20.0.3",
+    "jsdom-global": "^3.0.2",
+    "vue-jest": "^3.0.7",
+    "vue-template-compiler": "^2.7.14"
+  }
+}
