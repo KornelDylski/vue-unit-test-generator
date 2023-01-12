@@ -28,10 +28,16 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   props: {
+    /**
+     * Diam eirmod no stet lorem no, sed dolores vero diam.
+     * 
+     * @userId
+     */
     userId: {
       type: String,
       required: true,
     },
+    /** Ut vero accusam dolor justo diam lorem stet sanctus sit. */
     isEnabled: {
       type: Boolean,
       default: true,
@@ -59,6 +65,7 @@ export default {
   methods: {
     ...mapActions('user', { initUser: 'init' }),
     ...mapActions('favorites', ['addUserToFavorite']),
+    // ...mapActions('favorites', ['unused']),
 
     onClickClose() {
       this.$emit('close');

@@ -8,6 +8,9 @@ localVue.use(Vuex);
 const stubs = {
   track: jest.fn(),
   windowOpen: jest.fn(),
+  init: jest.fn(),
+  checkFavorite: jest.fn(),
+  openUserLink: jest.fn(),
 };
 
 window.open = stubs.windowOpen;

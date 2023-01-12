@@ -27,8 +27,7 @@ cd vue-unit-test-generator
 npm install -g .
 ```
 
-## Run
-To use *vue-unit-test-generator* and generate new tests run
+## Run with Vue component
 
 ```
 vutg ./path/to/component.vue
@@ -40,6 +39,35 @@ The function will generate a spec test file for the `component.vue` at the path
 ```
 
 The test file will contain a boilerplate for tests with prepared mocks.
+
+## Run with Vuex store files
+
+```
+# run on dir containing `state.js` `actions.js` `mutations.js` and `getters.js`
+vutg ./path/to/store/storeName/
+
+# run on single file
+vutg ./path/to/store/storeName.js
+```
+
+The function will generate a spec test files for **actions**, **mutations** and **getters**
+
+```
+./path/to/store/storeName/__tests__/actions.spec.js
+./path/to/store/storeName/__tests__/mutations.spec.js
+./path/to/store/storeName/__tests__/getters.spec.js
+```
+
+## Options
+```
+  -h --help          # show this message and quit
+  -n --name          # set custom name for spec file
+  -d --testDir       # relative directory where spec file will be placed, default "__tests__"
+  -o --omitTests     # will not add initial tests in "describe()" section
+  -v --verbose       # print extracted data used for mocking
+  --template         # set path to custom hygen.io template 
+  --dry              # dry run
+```
 
 ## Features
 The generator parses component files with multiple regexp to extract data that is used to create mocks in the spec file. **It is NOT able to understand JS/Vue code!**
@@ -96,7 +124,7 @@ The generator parses component files with multiple regexp to extract data that i
 6. Add tests for `child components events`
 ```
   test('should do something on child-component "@some"', () => {
-    wrapper.findComponent('child-component').vm.$emit('some');
+    wrapper.findComponent({ ref: 'childComponent' }).vm.$emit('some');
 
     ...
   })
@@ -110,18 +138,6 @@ The generator parses component files with multiple regexp to extract data that i
     ...
   })
 ```
-
-## Options
-```
-  -h --help          # show this message and quit
-  -n --name          # set custom name for spec file
-  -d --testDir       # relative directory where spec file will be placed, default "__tests__"
-  -o --omitTests     # will not add initial tests in "describe()" section
-  -v --verbose       # print extracted data used for mocking
-  --template         # set path to custom hygen.io template 
-  --dry              # dry run
-```
-
 
 ## Contributing
 If you find a bug or have an idea for a new feature, please open an issue or submit a pull request. We welcome all contributions!
