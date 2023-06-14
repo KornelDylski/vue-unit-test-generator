@@ -1,6 +1,6 @@
 # vue-unit-test-generator (vutg)
 
-Unit tests generator for Vue components
+Unit tests schema generator for Vue components
 
 ## Dependencies
 
