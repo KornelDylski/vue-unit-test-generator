@@ -1,10 +1,11 @@
 {
   "name": "vue-unit-test-generator",
   "version": "0.1.0",
-  "description": "Generates jest unit test in spec file from vue component",
+  "description": "Generates mocked schema for jest unit test in spec file from vue component",
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node index.js",
     "test": "jest"
   },
   "repository": {
