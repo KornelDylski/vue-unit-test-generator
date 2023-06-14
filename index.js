@@ -100,6 +100,20 @@ async function createUnitTest(argPath, args) {
  */
 const scriptArgs = yargsParser(process.argv.slice(2));
 
+if (scriptArgs['v']) {
+  async function printPackageVersion() {
+    const packageJson = await fs.readFile(
+      path.resolve(__dirname, 'package.json'),
+      'utf-8',
+    );
+    const { version } = JSON.parse(packageJson);
+    console.log(version);
+  }
+
+  printPackageVersion();
+  exit();
+}
+
 if (scriptArgs['help'] || scriptArgs['h'] || process.argv.length <= 2) {
   console.log(
     '\x1b[33m%s\x1b[0m',
