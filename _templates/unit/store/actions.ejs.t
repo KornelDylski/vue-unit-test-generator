@@ -2,6 +2,7 @@
 to: <%= dir %>/<%= testDir %>/<%= specName %>.spec.js
 ---
 <% data = JSON.parse(locals.data) -%>
+<% addTests = addTests !== 'false' -%>
 <% if (data.importFile) { -%>
 import { actions, state as initState } from '../<%= data.importFile %>';
 <% } else { -%>
@@ -24,6 +25,7 @@ describe('<%= h.changeCase.pascal(storeName) %> actions', () => {
     jest.clearAllMocks();
     mocks.state = initState();
   });
+<% if (addTests) { -%>
 <% data.actions.forEach(({ name, commits, dispatches, getters, rootGetters, parameters }) => { %>
   test('<%= name %>', () => {
 <% if (parameters) { -%>
@@ -92,4 +94,5 @@ describe('<%= h.changeCase.pascal(storeName) %> actions', () => {
 <% } -%>
   });
 <% }) -%>
+<% } -%>
 });

@@ -15,17 +15,4 @@ describe('AdminStore actions', () => {
     jest.clearAllMocks();
     mocks.state = initState();
   });
-
-  test('initAdmin', () => {
-    const params = {};
-    actions.initAdmin(mocks, params);
-
-    expect(mocks.commit).toHaveBeenNthCalledWith(1, 'setAdminName', null); /* TODO: fill commit args */
-  });
-
-  test('removeAdmin', () => {
-    actions.removeAdmin(mocks);
-
-    expect(mocks.commit).toHaveBeenNthCalledWith(1, 'removeAdminName');
-  });
 });

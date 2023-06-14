@@ -2,6 +2,7 @@
 to: <%= dir %>/<%= testDir %>/<%= specName %>.spec.js
 ---
 <% data = JSON.parse(locals.data) -%>
+<% addTests = addTests !== 'false' -%>
 <% if (data.importFile) { -%>
 import { state as initState } from '../<%= data.importFile %>';
 <% } else { -%>
@@ -20,6 +21,7 @@ describe('<%= h.changeCase.pascal(storeName) %> getters', () => {
   beforeEach(() => {
     mocks.state = initState();
   });
+<% if (addTests) { -%>
 <% data.getters.forEach((getter) => { %>
   test('<%= getter %>', () => {
     const results = getters.<%= getter %>(mocks.state);
@@ -28,4 +30,5 @@ describe('<%= h.changeCase.pascal(storeName) %> getters', () => {
     expect(results).toEqual(null);
   });
 <% }) -%>
+<% } -%>
 });

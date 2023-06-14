@@ -108,7 +108,7 @@ Unit tests generator for Vue components
   -h --help          # show this message and quit
   -n --name          # set custom name for spec file
   -d --testDir       # relative directory where spec file will be placed, default "__tests__"
-  -o --omitTests     # will not add initial tests in "describe()" section
+  -a --addTests      # will add initial tests schemas in "describe()" section
   -v --verbose       # print data passed to template
   --template         # set path to custom hygen.io template 
   --dry              # dry run
@@ -121,7 +121,10 @@ Unit tests generator for Vue components
 if (scriptArgs && scriptArgs['_'].length) {
   scriptArgs['_'].forEach((filePath) => {
     try {
-      createUnitTest(path.normalize(filePath), { rootDir: __dirname, ...scriptArgs });
+      createUnitTest(path.normalize(filePath), {
+        rootDir: __dirname,
+        ...scriptArgs,
+      });
     } catch (err) {
       console.error(err);
     }

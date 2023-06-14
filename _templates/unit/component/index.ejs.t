@@ -2,7 +2,7 @@
 to: <%= dir %>/<%= testDir %>/<%= specName %>.spec.js
 ---
 <% data = JSON.parse(locals.data) -%>
-<% omitTests = omitTests !== 'false' -%>
+<% addTests = addTests !== 'false' -%>
 <% if (data.store) { -%>
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -143,10 +143,12 @@ describe('<%= Name %>', () => {
   });
 <% } -%>
 
+<% if (addTests) { -%>
   test('should match snapshot', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
-<% if (data.store && !omitTests) { -%>
+<% } -%>
+<% if (data.store && addTests) { -%>
 <% Object.entries(data.store).forEach(([storeName, { actions }]) => { -%>
 <% if (actions) { -%>
 <% actions.forEach(action => { %>
@@ -158,7 +160,7 @@ describe('<%= Name %>', () => {
 <% } -%>
 <% }) -%>
 <% } -%>
-<% if (data.emits && !omitTests) { -%>
+<% if (data.emits && addTests) { -%>
 <% data.emits.forEach(emit => { %>
   test('should emit "<%= emit %>" event', () => {
     /* TODO: <%= emit %> event */

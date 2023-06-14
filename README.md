@@ -63,7 +63,7 @@ The function will generate a spec test files for **actions**, **mutations** and 
   -h --help          # show this message and quit
   -n --name          # set custom name for spec file
   -d --testDir       # relative directory where spec file will be placed, default "__tests__"
-  -o --omitTests     # will not add initial tests in "describe()" section
+  -a --addTests      # will add initial tests schemas in "describe()" section
   -v --verbose       # print extracted data used for mocking
   --template         # set path to custom hygen.io template 
   --dry              # dry run

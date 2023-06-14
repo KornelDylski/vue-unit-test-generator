@@ -2,6 +2,7 @@
 to: <%= dir %>/<%= testDir %>/<%= specName %>.spec.js
 ---
 <% data = JSON.parse(locals.data) -%>
+<% addTests = addTests !== 'false' -%>
 <% if (data.importFile) { -%>
 import { state as initState } from '../<%= data.importFile %>';
 <% } else { -%>
@@ -20,6 +21,7 @@ describe('<%= h.changeCase.pascal(storeName) %> mutations', () => {
   beforeEach(() => {
     mocks.state = initState();
   });
+<% if (addTests) { -%>
 <% data.mutations.forEach((mutation) => { %>
   test('<%= mutation %>', () => {
     const params = {};
@@ -29,4 +31,5 @@ describe('<%= h.changeCase.pascal(storeName) %> mutations', () => {
     expect(mocks.state).toEqual(null);
   });
 <% }) -%>
+<% } -%>
 });
