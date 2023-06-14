@@ -14,17 +14,10 @@ Generated tests are compatible with:
 Generator is using for template engine.
 - [Hygen IO](https://www.hygen.io/docs/quick-start/)
 
-## Local installation
+## Installation
 
-1. clone repository
 ```
-git clone git@github.com:KornelDylski/vue-unit-test-generator.git
-```
-
-2. install package globally
-```
-cd vue-unit-test-generator
-npm install -g .
+npm install -g vue-unit-test-generator
 ```
 
 ## Run with Vue component
