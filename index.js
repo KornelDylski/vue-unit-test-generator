@@ -100,7 +100,7 @@ async function createUnitTest(argPath, args) {
  */
 const scriptArgs = yargsParser(process.argv.slice(2));
 
-if (scriptArgs['help'] || scriptArgs['h']) {
+if (scriptArgs['help'] || scriptArgs['h'] || process.argv.length <= 2) {
   console.log(
     '\x1b[33m%s\x1b[0m',
     `
