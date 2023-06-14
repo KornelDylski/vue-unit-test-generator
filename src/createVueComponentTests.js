@@ -7,7 +7,7 @@ export default async function createVueComponentTests(
   filePath,
   componentName,
   componentPath,
-  { dry, template, verbose, v, name, n, testDir, d, omitTests, o, rootDir },
+  { dry, template, verbose, v, name, n, testDir, d, addTests, a, rootDir },
 ) {
   const content = await fs.readFile(filePath, 'utf8');
 
@@ -18,7 +18,7 @@ export default async function createVueComponentTests(
   hygenArgs.push('--dir', componentPath);
   hygenArgs.push('--specName', name || n || componentName);
   hygenArgs.push('--testDir', testDir || d || '__tests__');
-  hygenArgs.push('--omitTests', omitTests || o || 'false');
+  hygenArgs.push('--addTests', addTests || a || 'false');
 
   const hygenArgsData = parseComponent(content);
 

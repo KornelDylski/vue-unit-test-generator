@@ -101,27 +101,4 @@ describe('UserComponent', () => {
     jest.clearAllMocks();
   });
 
-  test('should match snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot();
-  });
-
-  test('should call "init" action', () => {
-    /* TODO: user.init action */
-    expect(stubs.init).toHaveBeenCalledTimes(1);
-  });
-
-  test('should call "checkFavorite" action', () => {
-    /* TODO: favorites.checkFavorite action */
-    expect(stubs.checkFavorite).toHaveBeenCalledTimes(1);
-  });
-
-  test('should call "openUserLink" action', () => {
-    /* TODO: logger.openUserLink action */
-    expect(stubs.openUserLink).toHaveBeenCalledTimes(1);
-  });
-
-  test('should emit "close" event', () => {
-    /* TODO: close event */
-    expect(wrapper.emitted('close')).toBeTruthy();
-  });
 });

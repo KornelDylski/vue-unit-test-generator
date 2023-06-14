@@ -11,7 +11,4 @@ describe('EmptyComponent', () => {
     wrapper = shallowMount(EmptyComponent);
   });
 
-  test('should match snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot();
-  });
 });

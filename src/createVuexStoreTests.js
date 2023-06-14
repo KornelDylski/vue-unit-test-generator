@@ -9,7 +9,7 @@ async function createStoreModuleTests(
   storeName, // user
   storePath, // /something/store/user/
   importFile,
-  { verbose, v, dry, template, name, n, testDir, d, rootDir },
+  { verbose, v, dry, template, name, n, addTests, a, testDir, d, rootDir },
 ) {
   const hygenArgs = ['unit', 'store:' + fileType];
 
@@ -19,6 +19,7 @@ async function createStoreModuleTests(
   hygenArgs.push('--dir', storePath);
   hygenArgs.push('--specName', name || n || fileType);
   hygenArgs.push('--testDir', testDir || d || '__tests__');
+  hygenArgs.push('--addTests', addTests || a || 'false');
 
   let data;
   if (fileType === 'actions') {
@@ -54,7 +55,7 @@ function stripImports(jsString) {
   return jsString
     .replace(/(\w+) = (await |)import\([^\)]*\)/gm, '$1 = {}')
     .replace(/import\([^\)]*\);?/gm, '')
-    .replace(/import (\n|.)*?(\'$|;$)/gm, '')
+    .replace(/import (\n|.)*?(\'$|;$)/gm, '');
 }
 
 async function loadFileIgnoringImports(filePath) {

@@ -15,17 +15,4 @@ describe('Client actions', () => {
     jest.clearAllMocks();
     mocks.state = initState();
   });
-
-  test('initClient', () => {
-    const params = {};
-    actions.initClient(mocks, params);
-
-    expect(mocks.commit).toHaveBeenNthCalledWith(1, 'setClientName', null); /* TODO: fill commit args */
-  });
-
-  test('removeClient', () => {
-    actions.removeClient(mocks);
-
-    expect(mocks.commit).toHaveBeenNthCalledWith(1, 'removeClientName');
-  });
 });
