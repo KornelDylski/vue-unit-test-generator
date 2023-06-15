@@ -100,20 +100,6 @@ export default async function createUnitTest(argPath, args) {
  */
 const scriptArgs = yargsParser(process.argv.slice(2));
 
-if (scriptArgs['v']) {
-  async function printPackageVersion() {
-    const packageJson = await fs.readFile(
-      path.resolve(__dirname, 'package.json'),
-      'utf-8',
-    );
-    const { version } = JSON.parse(packageJson);
-    console.log(version);
-  }
-
-  printPackageVersion();
-  exit();
-}
-
 if (scriptArgs['help'] || scriptArgs['h'] || process.argv.length <= 2) {
   console.log(
     '\x1b[33m%s\x1b[0m',
@@ -124,6 +110,7 @@ Unit tests generator for Vue components
   -d --testDir       # relative directory where spec file will be placed, default "__tests__"
   -a --addTests      # will add initial tests schemas in "describe()" section
   -v --verbose       # print data passed to template
+  --version          # print version
   --template         # set path to custom hygen.io template 
   --dry              # dry run
 `,
@@ -132,7 +119,20 @@ Unit tests generator for Vue components
   exit();
 }
 
-if (scriptArgs && scriptArgs['_'].length) {
+if (scriptArgs['version']) {
+  async function printPackageVersion() {
+    const packageJson = await fs.readFile(
+      path.resolve(__dirname, 'package.json'),
+      'utf-8',
+    );
+    const { version } = JSON.parse(packageJson);
+    console.log(version);
+    exit();
+  }
+  printPackageVersion();
+}
+
+if (scriptArgs && scriptArgs['_'].length && !scriptArgs['version']) {
   scriptArgs['_'].forEach((filePath) => {
     try {
       createUnitTest(path.normalize(filePath), {
