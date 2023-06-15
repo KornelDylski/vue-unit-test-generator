@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 import createVueComponentTests from './src/createVueComponentTests.js';
 import createVuexStoreTests from './src/createVuexStoreTests.js';
 
-async function createUnitTest(argPath, args) {
+export default async function createUnitTest(argPath, args) {
   const targetPath = path.resolve(argPath);
   const pathParsed = path.parse(targetPath);
   const parentPath = path.resolve(targetPath, '..');
