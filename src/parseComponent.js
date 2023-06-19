@@ -159,7 +159,7 @@ function findServices(content) {
 
 function findTemplateEvents(content) {
   // TODO: should also return related tag name
-  const regexTemplateEvents = /\@([a-zA-Z0-9_-]+)\=['"]([^'"]+)['"]/g;
+  const regexTemplateEvents = /\@([a-zA-Z0-9_-]+)\=["]([^"]+)["]/g;
   const templateEventsMatch = matchAllToArray(
     content.matchAll(regexTemplateEvents),
   );
