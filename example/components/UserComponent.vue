@@ -30,7 +30,7 @@ export default {
   props: {
     /**
      * Diam eirmod no stet lorem no, sed dolores vero diam.
-     * 
+     *
      * @userId
      */
     userId: {
@@ -41,6 +41,11 @@ export default {
     isEnabled: {
       type: Boolean,
       default: true,
+    },
+    /** Lorem ipsum dolor sit amet, exercitation */
+    unused: {
+      type: Object,
+      default: () => ({}),
     },
   },
   inject: ['utils'],

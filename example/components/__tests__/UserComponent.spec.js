@@ -67,6 +67,7 @@ const mountComponent = (args = {}) =>
     propsData: {
       userId: args.userId, /* TODO: set required property */
       isEnabled: args.isEnabled ?? true,
+      unused: args.unused,
     },
     provide: {
       utils: {
