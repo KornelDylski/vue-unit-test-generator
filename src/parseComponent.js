@@ -7,7 +7,7 @@ function findImport(content, importName) {
 }
 
 function findProps(content) {
-  const regexProps = /props: {((\s*\w*: {[^}]*},?\s*)*)}/;
+  const regexProps = /props: {(\s*\w*: {.*?},\s*)},/s;
   const propsMatch = content.match(regexProps);
 
   if (!propsMatch) {
@@ -15,19 +15,36 @@ function findProps(content) {
   }
 
   const results = [];
-  const props = propsMatch[1].match(/[a-zA-Z0-9_-]+(: {[^}]*})/g);
+
+  const props = propsMatch[1].match(/[a-zA-Z0-9_-]+(: {.*?},)/gs);
 
   props.forEach((prop) => {
-    const propName = prop.match(/^[a-zA-Z0-9_-]+/);
-    const defaultMatch = prop.match(/(?<=default: )[\w-'"]+(?=,)/);
-    const isRequired = /required: true/.test(prop);
+    const [_, propName, propContent] = prop.match(/^([a-zA-Z0-9_-]+): (.*)$/s);
+
+    const isDefault = /default(:|:\s*function\s*\(\)|\:?\s*\(\))?/.test(
+      propContent,
+    );
+    let defaultMatch;
+    if (isDefault) {
+      const isDefaultMethod = /default(:\s*function\s*\(\)|\:?\s*\(\))/.test(
+        propContent,
+      );
+      if (isDefaultMethod) {
+        defaultMatch = null;
+      } else {
+        const defaultRegexp = /default: (.*?),/s;
+        defaultMatch = propContent.match(defaultRegexp);
+      }
+    }
+
+    const isRequired = /required: true/.test(propContent);
     if (!propName) {
       return;
     }
     results.push({
-      name: propName[0],
+      name: propName,
       required: isRequired,
-      value: defaultMatch?.[0] || null,
+      value: defaultMatch?.[1] || null,
     });
   });
 
