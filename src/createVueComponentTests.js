@@ -1,3 +1,4 @@
+import clipboardy from 'clipboardy';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { parseComponent } from './parseComponent.js';
@@ -7,26 +8,30 @@ export default async function createVueComponentTests(
   filePath,
   componentName,
   componentPath,
-  { dry, template, verbose, v, name, n, testDir, d, addTests, a, rootDir },
+  // prettier-ignore
+  { template, verbose, v, dry, name, n, testDir, d, addTests, a, rootDir, clip },
 ) {
-  const content = await fs.readFile(filePath, 'utf8');
+  testDir = testDir || d || '__tests__';
+  addTests = addTests || a || 'false';
+  verbose = verbose || v || false;
+  const specName = name || n || componentName;
 
   const hygenArgs = ['unit', 'component'];
-
-  // spec name
   hygenArgs.push('--name', componentName);
   hygenArgs.push('--dir', componentPath);
-  hygenArgs.push('--specName', name || n || componentName);
-  hygenArgs.push('--testDir', testDir || d || '__tests__');
-  hygenArgs.push('--addTests', addTests || a || 'false');
+  hygenArgs.push('--specName', specName);
+  hygenArgs.push('--testDir', testDir);
+  hygenArgs.push('--addTests', addTests);
 
-  const hygenArgsData = parseComponent(content);
+  const componentContent = await fs.readFile(filePath, 'utf8');
 
-  if (verbose || v || dry) {
+  const hygenArgsData = parseComponent(componentContent);
+
+  if (verbose || dry) {
     console.log(hygenArgsData);
 
     if (dry) {
-      exit();
+      return;
     }
   }
 
@@ -37,4 +42,21 @@ export default async function createVueComponentTests(
     : path.resolve(`${rootDir}/_templates`);
 
   await runHygen(hygenArgs, templatePath, rootDir);
+
+  if (clip) {
+    const specPath = `${componentPath}/${testDir}/${specName}.spec.js`;
+    const specContent = await fs.readFile(path.resolve(specPath), 'utf8');
+
+    if (clip) {
+      // prettier-ignore
+      clipboardy.writeSync(
+        '=== COMPONENT ===\n' +
+        componentContent +
+        '\n\n' +
+        '=== TEST SPEC ===\n' +
+        specContent
+      );
+      console.log('Copied to clipboard');
+    }
+  }
 }
