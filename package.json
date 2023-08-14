@@ -1,6 +1,6 @@
 {
   "name": "vue-unit-test-generator",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Generates mocked schema for jest unit test in spec file from vue component",
   "main": "index.js",
   "type": "module",
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/KornelDylski/vue-unit-test-generator#readme",
   "dependencies": {
+    "clipboardy": "^3.0.0",
     "hygen": "^6.2.11",
     "vuex": "^3.6.2",
     "yargs-parser": "^21.1.1"

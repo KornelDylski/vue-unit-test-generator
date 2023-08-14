@@ -1,7 +1,7 @@
+import { promises as fs } from 'fs';
 import path from 'path';
 import { parseActions, parseGetters, parseMutations } from './parseStore.js';
 import { runHygen } from './utils.js';
-import { promises as fs } from 'fs';
 
 async function createStoreModuleTests(
   content, // file module
@@ -9,17 +9,20 @@ async function createStoreModuleTests(
   storeName, // user
   storePath, // /something/store/user/
   importFile,
-  { verbose, v, dry, template, name, n, addTests, a, testDir, d, rootDir },
+  // prettier-ignore
+  { verbose, v, dry, template, name, n, addTests, a, testDir, d, rootDir, clip },
 ) {
-  const hygenArgs = ['unit', 'store:' + fileType];
+  testDir = testDir || d || '__tests__';
+  addTests = addTests || a || 'false';
+  name = name || n || fileType;
 
-  // spec name
+  const hygenArgs = ['unit', 'store:' + fileType];
   hygenArgs.push('--name', fileType);
   hygenArgs.push('--storeName', storeName);
   hygenArgs.push('--dir', storePath);
-  hygenArgs.push('--specName', name || n || fileType);
-  hygenArgs.push('--testDir', testDir || d || '__tests__');
-  hygenArgs.push('--addTests', addTests || a || 'false');
+  hygenArgs.push('--specName', name);
+  hygenArgs.push('--testDir', testDir);
+  hygenArgs.push('--addTests', addTests);
 
   let data;
   if (fileType === 'actions') {
@@ -49,6 +52,16 @@ async function createStoreModuleTests(
     : path.resolve(`${rootDir}/_templates`);
 
   await runHygen(hygenArgs, templatePath, rootDir);
+
+  if (clip) {
+    const specPath = `${storePath}/${testDir}/${name}.spec.js`;
+    const specContent = await fs.readFile(path.resolve(specPath), 'utf8');
+
+    if (clip) {
+      clipboardy.writeSync(specContent);
+      console.log('Copied to clipboard');
+    }
+  }
 }
 
 function stripImports(jsString) {

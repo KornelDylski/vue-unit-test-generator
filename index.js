@@ -110,6 +110,7 @@ Unit tests generator for Vue components
   -d --testDir       # relative directory where spec file will be placed, default "__tests__"
   -a --addTests      # will add initial tests schemas in "describe()" section
   -v --verbose       # print data passed to template
+  --clip             # copy code and generated test to clipboard
   --version          # print version
   --template         # set path to custom hygen.io template 
   --dry              # dry run
