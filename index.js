@@ -23,6 +23,27 @@ export default async function createUnitTest(argPath, args) {
       let filesInDir = await fs.readdir(targetPath);
 
       /**
+       * create store tests from store /storename/*.js files
+       */
+      const storeFiles = ['actions.js', 'getters.js', 'mutations.js'];
+      const areFiles = filesInDir.some((file) => storeFiles.includes(file));
+      if (areFiles) {
+        for (const file of filesInDir) {
+          if (!storeFiles.includes(file)) {
+            continue;
+          }
+          const fileName = file.split('.')[0];
+          await createVuexStoreTests(
+            fileName,
+            pathParsed.name,
+            targetPath,
+            args,
+          );
+        }
+        return;
+      }
+
+      /**
        * create store tests from /storename/index.js file
        */
       if (filesInDir.includes('index.js')) {
@@ -33,19 +54,6 @@ export default async function createUnitTest(argPath, args) {
           args,
         );
       }
-
-      /**
-       * create store tests from store /storename/*.js files
-       */
-      const storeFiles = ['actions.js', 'getters.js', 'mutations.js'];
-      for (const file of filesInDir) {
-        if (!storeFiles.includes(file)) {
-          continue;
-        }
-        const fileName = file.split('.')[0];
-        await createVuexStoreTests(fileName, pathParsed.name, targetPath, args);
-      }
-      return;
     }
   }
 

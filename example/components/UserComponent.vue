@@ -4,6 +4,10 @@
       Close ❌
     </button>
 
+    <button :disabled="isEnabled" type="button" @click="$emit('apply')">
+      Apply ✅ 
+    </button>
+
     <header>
       <h1>{{ name }}</h1>
       <date>{{ birthDate }}</date>

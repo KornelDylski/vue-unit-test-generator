@@ -1,5 +1,5 @@
-import { deepMerge, matchAllToArray } from './utils.js';
 import { stripComments } from './parseStore.js';
+import { deepMerge, matchAllToArray } from './utils.js';
 
 function findImport(content, importName) {
   const regexImport = new RegExp('^import.*(' + importName + ').*$', 'm');
@@ -120,7 +120,7 @@ function findHttpMethods(content) {
  *   ...
  * }
  */
-function findServices(content) {
+export function findServices(content) {
   const serviceMatches = matchAllToArray(
     content.matchAll(/(\$\w+)(?:(\()|\.(\w+)(\(?))/g),
   );
@@ -214,7 +214,7 @@ function findStoreMapper(content, mapperName) {
   const results = {};
 
   for (const mapAction of mapActionsMatch) {
-    const storeName = mapAction[1].replace(/\W*/gm, '');
+    const storeName = mapAction[1].replace(/[^a-zA-Z0-9_\/]*/gm, ''); // all non-alphanumeric characters are removed, with except '/'
     const actionsMatch = mapAction[2].match(/['"]([^"']+)["']/gm);
 
     if (!actionsMatch) {

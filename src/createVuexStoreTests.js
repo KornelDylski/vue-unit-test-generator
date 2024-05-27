@@ -36,7 +36,7 @@ async function createStoreModuleTests(
   }
 
   if (verbose || v || dry) {
-    console.log(data);
+    console.log(JSON.stringify(data, null, 2));
 
     if (dry) {
       return;
@@ -95,8 +95,14 @@ export default async function createVuexStoreTests(
   if (['actions', 'getters', 'mutations'].includes(fileName)) {
     await createStoreModuleTests(content, fileName, storeName, storePath, false, args);
   } else {
-    await createStoreModuleTests(content.actions, 'actions', storeName, storePath, fileName, args);
-    await createStoreModuleTests(content.getters, 'getters', storeName, storePath, fileName, args);
-    await createStoreModuleTests(content.mutations, 'mutations', storeName, storePath, fileName, args);
+    if (content.actions) {
+      await createStoreModuleTests(content.actions, 'actions', storeName, storePath, fileName, args);
+    }
+    if (content.getters) {
+      await createStoreModuleTests(content.getters, 'getters', storeName, storePath, fileName, args);
+    }
+    if (content.mutations) {
+      await createStoreModuleTests(content.mutations, 'mutations', storeName, storePath, fileName, args);
+    }
   }
 }

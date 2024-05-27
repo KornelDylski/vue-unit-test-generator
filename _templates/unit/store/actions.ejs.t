@@ -4,18 +4,45 @@ to: <%= dir %>/<%= testDir %>/<%= specName %>.spec.js
 <% data = JSON.parse(locals.data) -%>
 <% addTests = addTests !== 'false' -%>
 <% if (data.importFile) { -%>
-import { actions, state as initState } from '../<%= data.importFile %>';
+import store from '../<%= data.importFile %>';
+
+const { actions, state: initState } = store;
 <% } else { -%>
 import actions from '../actions';
 import initState from '../state';
 <% } -%>
 
-const mocks = {
+const context = {
   dispatch: jest.fn(),
   commit: jest.fn(),
   state: initState(),  
 };
 
+<% if (data.services && data.services.$http) { -%>
+const getHttpMock = () =>
+  jest.fn(()  => {
+    return {
+<% data.services.$http.methods.forEach((met) => { -%>
+      <%= met %>: jest.fn().mockReturnThis(),
+<% }) -%>
+    };
+  });
+
+<% } -%>
+<% if (data.services.$http || data.services.$router) { -%>
+const mocks = {
+<% if (data.services.$http) { -%>
+  $http: getHttpMock(),
+<% } -%>
+<% if (data.services.$router) { -%>
+  $router: {
+<% data.services.$router.methods.forEach((met) => { -%>
+    <%= met %>: jest.fn(),
+<% }) -%>
+  },
+<% } -%>
+}
+<% } -%>
 /**
  * <%= storeName %> actions
  */
@@ -23,7 +50,7 @@ describe('<%= h.changeCase.pascal(storeName) %> actions', () => {
   
   beforeEach(() => {
     jest.clearAllMocks();
-    mocks.state = initState();
+    context.state = initState();
   });
 <% if (addTests) { -%>
 <% data.actions.forEach(({ name, commits, dispatches, getters, rootGetters, parameters }) => { %>
@@ -41,7 +68,7 @@ describe('<%= h.changeCase.pascal(storeName) %> actions', () => {
 <% } -%>
 <% if (getters || rootGetters) { -%>
     actions.<%= name %>({
-      ...mocks,
+      ...context,
 <% if (getters) { -%>
       getters: {
 <% getters.forEach((getter) => { -%>
@@ -67,27 +94,27 @@ describe('<%= h.changeCase.pascal(storeName) %> actions', () => {
     }, params);
 <% } else { -%>
 <% if (parameters) { -%>
-    actions.<%= name %>(mocks, params);
+    actions.<%= name %>(context, params);
 <% } else { -%>
-    actions.<%= name %>(mocks);
+    actions.<%= name %>(context);
 <% } -%>
 <% } -%>
 <% if (commits || dispatches) { %>
 <% if (commits) { -%>
 <% commits.forEach(({ name, args }, nth) => { -%>
 <% if (args.length) { -%>
-    expect(mocks.commit).toHaveBeenCalledWith('<%= name %>', null); /* TODO: fill commit args */
+    expect(context.commit).toHaveBeenCalledWith('<%= name %>', null); /* TODO: fill commit args */
 <% } else {-%>
-    expect(mocks.commit).toHaveBeenCalledWith('<%= name %>');
+    expect(context.commit).toHaveBeenCalledWith('<%= name %>');
 <% } -%>
 <% }) -%>
 <% } -%>
 <% if (dispatches) { -%>
 <% dispatches.forEach(({ name, args }, nth) => { -%>
 <% if (args.length) { -%>
-    expect(mocks.dispatch).toHaveBeenCalledWith('<%= name %>', null); /* TODO: fill dispatch args */
+    expect(context.dispatch).toHaveBeenCalledWith('<%= name %>', null); /* TODO: fill dispatch args */
 <% } else {-%>
-    expect(mocks.dispatch).toHaveBeenCalledWith('<%= name %>');
+    expect(context.dispatch).toHaveBeenCalledWith('<%= name %>');
 <% } -%>
 <% }) -%>
 <% } -%>

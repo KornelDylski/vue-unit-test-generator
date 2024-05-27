@@ -4,12 +4,14 @@ to: <%= dir %>/<%= testDir %>/<%= specName %>.spec.js
 <% data = JSON.parse(locals.data) -%>
 <% addTests = addTests !== 'false' -%>
 <% if (data.importFile) { -%>
-import { state as initState } from '../<%= data.importFile %>';
+import store from '../<%= data.importFile %>';
+
+const { getters, state: initState } = store;
 <% } else { -%>
 import initState from '../state';
 <% } -%>
 
-const mocks = {
+const context = {
   state: initState(),
 };
 
@@ -19,12 +21,12 @@ const mocks = {
 describe('<%= h.changeCase.pascal(storeName) %> getters', () => {
   
   beforeEach(() => {
-    mocks.state = initState();
+    context.state = initState();
   });
 <% if (addTests) { -%>
 <% data.getters.forEach((getter) => { %>
   test('<%= getter %>', () => {
-    const results = getters.<%= getter %>(mocks.state);
+    const results = getters.<%= getter %>(context.state);
 
     /* TODO: fill expected value */
     expect(results).toEqual(null);
