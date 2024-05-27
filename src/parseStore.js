@@ -1,3 +1,4 @@
+import { findServices } from './parseComponent.js';
 import { matchAllToArray } from './utils.js';
 
 export function parseParams(funcStr) {
@@ -66,7 +67,7 @@ function findObjectField(codeContent, obj) {
     return;
   }
 
-  return matches.map((match) => match.filter(m => m)[1]);
+  return matches.map((match) => match.filter((m) => m)[1]);
 }
 
 function parseAction([name, func]) {
@@ -89,8 +90,13 @@ function parseAction([name, func]) {
 }
 
 export function parseActions(actionsMap) {
+  const servicesArr = Object.values(actionsMap).map((func) =>
+    findServices(stripComments(func.toString())),
+  ).filter(Boolean)
+
   return {
     actions: Object.entries(actionsMap).map(parseAction),
+    services: Object.assign({}, ...servicesArr),
   };
 }
 

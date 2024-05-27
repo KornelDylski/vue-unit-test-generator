@@ -1,7 +1,7 @@
 import actions from '../actions';
 import initState from '../state';
 
-const mocks = {
+const context = {
   dispatch: jest.fn(),
   commit: jest.fn(),
   state: initState(),  
@@ -14,6 +14,6 @@ describe('User actions', () => {
   
   beforeEach(() => {
     jest.clearAllMocks();
-    mocks.state = initState();
+    context.state = initState();
   });
 });

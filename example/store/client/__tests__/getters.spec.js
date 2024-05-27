@@ -1,6 +1,8 @@
-import { state as initState } from '../index';
+import store from '../index';
 
-const mocks = {
+const { getters, state: initState } = store;
+
+const context = {
   state: initState(),
 };
 
@@ -10,6 +12,6 @@ const mocks = {
 describe('Client getters', () => {
   
   beforeEach(() => {
-    mocks.state = initState();
+    context.state = initState();
   });
 });

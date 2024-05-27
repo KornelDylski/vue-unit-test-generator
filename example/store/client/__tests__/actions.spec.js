@@ -1,6 +1,8 @@
-import { actions, state as initState } from '../index';
+import store from '../index';
 
-const mocks = {
+const { actions, state: initState } = store;
+
+const context = {
   dispatch: jest.fn(),
   commit: jest.fn(),
   state: initState(),  
@@ -13,6 +15,6 @@ describe('Client actions', () => {
   
   beforeEach(() => {
     jest.clearAllMocks();
-    mocks.state = initState();
+    context.state = initState();
   });
 });

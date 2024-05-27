@@ -1,6 +1,6 @@
 import { state as initState } from '../adminStore';
 
-const mocks = {
+const context = {
   state: initState(),  
 };
 
@@ -10,6 +10,6 @@ const mocks = {
 describe('AdminStore mutations', () => {
   
   beforeEach(() => {
-    mocks.state = initState();
+    context.state = initState();
   });
 });

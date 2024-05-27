@@ -1,6 +1,6 @@
 import { actions, state as initState } from '../adminStore';
 
-const mocks = {
+const context = {
   dispatch: jest.fn(),
   commit: jest.fn(),
   state: initState(),  
@@ -13,6 +13,6 @@ describe('AdminStore actions', () => {
   
   beforeEach(() => {
     jest.clearAllMocks();
-    mocks.state = initState();
+    context.state = initState();
   });
 });

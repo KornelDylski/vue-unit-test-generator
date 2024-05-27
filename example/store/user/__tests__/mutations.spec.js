@@ -1,6 +1,6 @@
 import initState from '../state';
 
-const mocks = {
+const context = {
   state: initState(),  
 };
 
@@ -10,6 +10,6 @@ const mocks = {
 describe('User mutations', () => {
   
   beforeEach(() => {
-    mocks.state = initState();
+    context.state = initState();
   });
 });
